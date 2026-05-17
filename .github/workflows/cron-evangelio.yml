@@ -1,0 +1,16 @@
+name: Procesar Evangelio de Madrugada
+
+on:
+  schedule:
+    # Se ejecuta todos los días a las 06:00 UTC (03:00 AM hora de Argentina)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Este flag permite ejecutar la acción manualmente desde GitHub
+
+jobs:
+  despertar-funcion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Llamar a Supabase Edge Function
+        run: |
+          curl -i --request POST 'https://wjzohhocfqtfxatuigfb.supabase.co/functions/v1/procesar-evangelio-diario' \
+          --header 'Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}'
